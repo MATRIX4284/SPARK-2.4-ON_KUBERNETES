@@ -1,0 +1,39 @@
+Create Service Account spark and give Priviledges for Creating POD and associate Account Role with service account:
+
+kubectl delete serviceaccount spark
+kubectl delete -f spark-account-role.yaml
+kubectl delete clusterrolebinding spark-role
+kubectl create serviceaccount spark
+kubectl create -f spark-account-role.yaml
+kubectl create clusterrolebinding spark-role --clusterrole=spark --serviceaccount=default:spark --namespace=default
+
+BUILD SPARK 2.4.0 Image and Push it:
+
+cd ~/SPARK/SPARK-2.4-ON_KUBERNETES
+
+docker build -t kaustav4284/spark-2.4:navicore .
+
+docker push kaustav4284/spark-2.4:navicore
+
+
+DEPLOY SPARK CLUSTER IN KUBERNETES:
+
+kubectl delete -f spark-master-controller.yaml
+kubectl delete -f spark-master-service.yaml
+kubectl delete -f spark-worker-controller.yaml
+kubectl create -f spark-master-controller.yaml
+kubectl create -f spark-master-service.yaml
+kubectl create -f spark-worker-controller.yaml
+
+SPARK CLUSTER IS READY!!!
+
+
+
+
+
+
+
+
+
+
+
